@@ -1,0 +1,57 @@
+<form class="example-form">
+
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="Search" matInput [formControl]="searchControl" [matAutocomplete]="auto">
+    <button mat-button class="mat-button-background" matSuffix (click)="onFavouriteClick()">
+      <mat-icon>star</mat-icon>
+    </button>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort >
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element; let i=index"> {{i+1}}. </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Programming Language Column -->
+    <ng-container matColumnDef="programmingLanguage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Programming language </th>
+      <td mat-cell *matCellDef="let element"> {{element.programmingLanguage}} </td>
+    </ng-container>
+
+    <!-- URL Column -->
+    <ng-container matColumnDef="url">
+      <th mat-header-cell *matHeaderCellDef> URL </th>
+      <td mat-cell *matCellDef="let element"> <a href="{{element.url}}" target="_blank">{{element.url}}</a> </td>
+    </ng-container>
+
+    <!-- DETAILS -->
+    <ng-container matColumnDef="details">
+      <th mat-header-cell *matHeaderCellDef> Details </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button class="view-button-foreground" (click)="viewItemDetails(element)">
+          <mat-icon aria-label="View">remove_red_eye</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [length]="100" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+</form>
